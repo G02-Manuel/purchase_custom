@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report string="Purchase Order Lab" id="action_report_purchase_order_lab" model="purchase.order" report_type="qweb-pdf" name="product_image_purchase_order.report_purchaseorder_lab" file="product_image_purchase_order.report_purchaseorder_lab" print_report_name="
+                (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or
+                'Purchase Order Lab - %s' % (object.name))" />
+    </data>
+</odoo>

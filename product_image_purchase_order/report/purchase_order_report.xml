@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <template id="custom_external_layout_background" inherit_id="web.external_layout_boxed">
+        <xpath expr="//div[@class='header']" position="replace">
+            <div class="header" t-att-style="report_header_style">
+                <div class="o_boxed_header">
+                    <div class="text-center">
+                        <img t-if="company.seq_company_logo" t-att-src="image_data_uri(company.seq_company_logo)" class="center-block" alt="Logo"/>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
     <template id="report_purchaseorder_document_lab">
         <t t-call="web.external_layout">
             <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />

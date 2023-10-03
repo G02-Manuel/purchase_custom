@@ -7,9 +7,10 @@
     'author': "Gerlin Matos",
     'depends': ['base', 'purchase'],
     'data': [
+        'views/view_purchase_order.xml',
+        'views/view_res_company.xml',
         'report/purchase_order_report.xml',
         'report/purchase_reports.xml',
-        'views/view_purchase_order.xml',
     ],
     'demo': [],
     'installable': True,

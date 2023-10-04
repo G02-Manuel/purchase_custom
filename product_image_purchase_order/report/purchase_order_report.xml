@@ -61,7 +61,7 @@
             <div class="page">
                 <div class="oe_structure" />
 
-                <h2 t-if="o.state == 'draft'">Request for Quotation #<span t-field="o.name" />
+                <h2 t-if="o.state == 'draft'">Solicitud de presupuesto #<span t-field="o.name" />
                 </h2>
                 <h2 t-if="o.state in ['sent', 'to approve']">Purchase Order #<span t-field="o.name" />
                 </h2>

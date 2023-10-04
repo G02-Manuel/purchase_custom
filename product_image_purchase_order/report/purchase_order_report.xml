@@ -94,7 +94,7 @@
                     <tbody>
                         <tr>
                             <td class="text-center">
-                                <span t-field="o.dest_address_id" />
+                                <span t-field="o.x_entrega" />
                             </td>
                             <td class="text-center">
                                 <span t-field="o.partner_id" />

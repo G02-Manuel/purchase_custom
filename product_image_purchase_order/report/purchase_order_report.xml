@@ -1,18 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="custom_external_layout_background" inherit_id="web.external_layout_boxed">
-        <xpath expr="//div[@class='header']" position="replace">
-            <div class="header" t-att-style="report_header_style">
-                <div class="o_boxed_header">
-                    <div class="text-center">
-                        <img t-if="company.seq_company_logo" t-att-src="image_data_uri(company.seq_company_logo)" class="center-block" alt="Logo"/>
-                    </div>
+    <template id="external_layout_boxed_lab">
+        <div class="header" t-att-style="report_header_style">
+            <div class="o_boxed_header">
+                <div class="text-center">
+                    <img t-if="company.seq_company_logo" t-att-src="image_data_uri(company.seq_company_logo)" class="center-block" alt="Logo"/>
+                </div>
+                <div class="col-9 text-right" style="margin-top:22px;" t-field="company.report_header" name="moto"/>
+            </div>
+        </div>
+
+        <div class="article o_report_layout_boxed" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+        </div>
+
+        <div class="footer o_boxed_footer">
+            <div class="text-center">
+                <ul class="list-inline">
+                    <li t-if="company.seq_company_address" class="list-inline-item"><span t-field="company.seq_company_address"/> </li>
+                    <li t-if="company.phone" class="list-inline-item"> <i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"/><span t-field="company.phone"/></li>
+                    <li t-if="company.email" class="list-inline-item"> <span>| Bogotá, Cra 1 Este 72A 49 |</span></li>
+                    <li class="list-inline-item"> info<i class="fa fa-at" role="img" aria-label="Email" title="Email"/><span>schallerdesignlab.com</span></li>
+                    <li t-if="company.vat" class="list-inline-item"><t t-esc="(company.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>: <span t-esc="company.vat.replace(' ','\N{NO-BREAK SPACE}')"/></li>
+                </ul>
+                <div t-field="company.report_footer"/>
+                <div t-if="report_type == 'pdf'">
+                    Page: <span class="page"/> / <span class="topage"/>
                 </div>
             </div>
-        </xpath>
+        </div>
     </template>
+
+
+
+    <template id="external_layout_lab">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+
+        <!-- <t t-if="company.external_report_layout_id" t-call="{{company.external_report_layout_id.key}}"><t t-raw="0"/></t> -->
+        <t t-call="product_image_purchase_order.external_layout_boxed_lab"><t t-raw="0"/></t>
+
+    </template>
+
     <template id="report_purchaseorder_document_lab">
-        <t t-call="web.external_layout">
+        <t t-call="product_image_purchase_order.external_layout_lab">
             <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
             <div class="page">
                 <div class="oe_structure" />
@@ -74,22 +118,25 @@
                                 <strong>Imagen</strong>
                             </th>
                             <th>
-                                <strong>Description</strong>
+                                <strong>DESCRIPCIÓN</strong>
                             </th>
                             <th>
-                                <strong>Taxes</strong>
+                                <strong>IVA</strong>
                             </th>
                             <th class="text-center">
-                                <strong>Date Req.</strong>
+                                <strong>FECHA REQ.</strong>
                             </th>
                             <th class="text-right">
-                                <strong>Qty</strong>
+                                <strong>CANTIDAD</strong>
                             </th>
                             <th class="text-right">
-                                <strong>Unit Price</strong>
+                                <strong>PRECIO</strong>
                             </th>
                             <th class="text-right">
-                                <strong>Amount</strong>
+                                <strong>DISC. (%)</strong>
+                            </th>
+                            <th class="text-right">
+                                <strong>MONTO</strong>
                             </th>
                         </tr>
                     </thead>
@@ -115,6 +162,9 @@
                                 <span t-field="line.price_unit" />
                             </td>
                             <td class="text-right">
+                                <span>5%</span>
+                            </td>
+                            <td class="text-right">
                                 <span t-field="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
                             </td>
                         </tr>
@@ -133,7 +183,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Taxes</td>
+                                <td>IVA</td>
                                 <td class="text-right">
                                     <span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
                                 </td>
@@ -144,6 +194,14 @@
                                 </td>
                                 <td class="text-right">
                                     <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+                                </td>
+                            </tr>
+                            <tr class="border-black o_total">
+                                <td>
+                                    <strong>Moneda</strong>
+                                </td>
+                                <td class="text-right">
+                                    <span>USD</span>
                                 </td>
                             </tr>
                         </table>

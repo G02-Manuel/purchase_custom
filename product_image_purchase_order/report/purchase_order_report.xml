@@ -94,14 +94,14 @@
                     <tbody>
                         <tr>
                             <td class="text-center">
-                                <span t-field="o.partner_id.street" />
-                                <span t-field="o.partner_id.street2" />
-                                <span t-field="o.partner_id.city" />
-                                <span t-field="o.partner_id.state_id" />
-                                <span t-field="o.partner_id.zip" />
-                                <span t-field="o.partner_id.country_id" />
+                                <span t-field="o.x_entrega.street" />
+                                <span t-field="o.x_entrega.street2" />
+                                <span t-field="o.x_entrega.city" />
+                                <span t-field="o.x_entrega.state_id" />
+                                <span t-field="o.x_entrega.zip" />
+                                <span t-field="o.x_entrega.country_id" />
                                 <br />
-                                <span class="fa fa-phone" t-field="o.partner_id.phone" />
+                                <span class="fa fa-phone" t-field="o.x_entrega.phone" />
                             </td>
                             <td class="text-center">
                                 <span t-field="o.partner_id" />
